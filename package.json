@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "type": "module",
-  "main": "gendiff.js",
+  "main": "src/index.js",
   "bin": {
-    "gendiff": "gendiff.js"
+    "gendiff": "bin/gendiff.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -21,6 +21,12 @@
   },
   "homepage": "https://github.com/GKoil/frontend-project-lvl2#readme",
   "dependencies": {
-    "commander": "^5.1.0"
+    "commander": "^5.1.0",
+    "lodash": "^4.17.19"
+  },
+  "devDependencies": {
+    "eslint": "^7.4.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-plugin-import": "^2.22.0"
   }
 }

@@ -2,5 +2,9 @@ publish:
 	npm publish --dry-run
 link:
 	npm link
-unlink:
+install i:
+	npm build && npm link
+uninstall u:
 	npm unlink
+lint:
+	npx eslint .
