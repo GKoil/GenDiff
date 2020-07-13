@@ -10,3 +10,5 @@ lint:
 	npx eslint .
 test-coverage:
 	yarn test -- --coverage --coverageProvider=v8
+test-watch:
+	npx -n --experimental-vm-modules jest --watch --no-warnings
