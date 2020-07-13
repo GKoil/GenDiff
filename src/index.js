@@ -22,6 +22,5 @@ export default (fileBefore, fileAfter) => {
     }
   });
 
-  const endResult = `{ \n${result}}`;
-  console.log(endResult);
+  return `{ \n${result}}`;
 };

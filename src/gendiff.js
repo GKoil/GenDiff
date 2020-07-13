@@ -12,7 +12,8 @@ export default () => {
     .action((file1, file2) => {
       const beforeFile = fs.readFileSync(path.resolve(process.cwd(), file1), 'utf8');
       const afterFile = fs.readFileSync(path.resolve(process.cwd(), file2), 'utf8');
-      diff(beforeFile, afterFile);
+      const difference = diff(beforeFile, afterFile);
+      console.log(difference);
     })
     .option('-f, --format', 'output format');
 
