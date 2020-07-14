@@ -22,6 +22,7 @@
   "homepage": "https://github.com/GKoil/frontend-project-lvl2#readme",
   "dependencies": {
     "commander": "^5.1.0",
+    "js-yaml": "^3.14.0",
     "lodash": "^4.17.19"
   },
   "devDependencies": {

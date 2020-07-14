@@ -1,4 +1,11 @@
+import path from 'path';
+import parser from './parsers.js';
+
 export default (fileBefore, fileAfter) => {
+  if (path.extname(fileBefore) === '.yml' || path.extname(fileAfter) === '.yml') {
+    return console.log('yml');
+  }
+
   const ObjFileBefore = JSON.parse(fileBefore);
   const ObjFileAfter = JSON.parse(fileAfter);
 

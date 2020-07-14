@@ -1,4 +1,4 @@
-publish:
+publish p:
 	npm publish --dry-run
 link:
 	npm link
@@ -8,7 +8,7 @@ uninstall u:
 	npm unlink
 lint:
 	npx eslint .
-test-coverage:
+test-coverage tc:
 	yarn test -- --coverage --coverageProvider=v8
-test-watch:
+test-watch tw:
 	npx -n --experimental-vm-modules jest --watch --no-warnings
