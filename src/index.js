@@ -1,23 +1,27 @@
+import _ from 'lodash';
+
 export default (fileBefore, fileAfter) => {
-  const ObjFileBefore = JSON.parse(fileBefore);
-  const ObjFileAfter = JSON.parse(fileAfter);
+  const objFileBefore = JSON.parse(fileBefore);
+  const objFileAfter = JSON.parse(fileAfter);
 
   let result = '';
 
-  const entriesFileBefore = Object.entries(ObjFileBefore);
-  const entriesFileAfter = Object.entries(ObjFileAfter);
+  const entriesFileBefore = Object.entries(objFileBefore);
+  const entriesFileAfter = Object.entries(objFileAfter);
 
   entriesFileBefore.forEach(([key, value]) => {
-    if (ObjFileAfter[key] === value) {
+    if (objFileAfter[key] === value) {
       result += `    ${key}: ${value} \n`;
-    } else if (ObjFileAfter[key] === undefined) {
-      result += `  - ${key}: ${value} \n`;
-    } else {
-      result += `  + ${key}: ${ObjFileAfter[key]} \n  - ${key}: ${value} \n`;
+      return;
     }
+    if (!_.has(objFileAfter, key)) {
+      result += `  - ${key}: ${value} \n`;
+      return;
+    }
+    result += `  + ${key}: ${objFileAfter[key]} \n  - ${key}: ${value} \n`;
   });
   entriesFileAfter.forEach(([key, value]) => {
-    if (ObjFileBefore[key] === undefined) {
+    if (!_.has(objFileBefore, key)) {
       result += `  - ${key}: ${value} \n`;
     }
   });
