@@ -5,7 +5,7 @@
   "type": "module",
   "main": "src/index.js",
   "bin": {
-    "gendiff": "bin/gendiff.js"
+    "gendiff": "src/bin/gendiff.js"
   },
   "scripts": {
     "test": "npx -n --experimental-vm-modules jest --no-warnings"
