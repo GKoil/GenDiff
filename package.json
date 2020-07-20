@@ -5,7 +5,7 @@
   "type": "module",
   "main": "src/index.js",
   "bin": {
-    "gendiff": "bin/gendiff.js"
+    "gendiff": "src/bin/gendiff.js"
   },
   "scripts": {
     "test": "npx -n --experimental-vm-modules jest --no-warnings"
@@ -22,6 +22,7 @@
   "homepage": "https://github.com/GKoil/frontend-project-lvl2#readme",
   "dependencies": {
     "commander": "^5.1.0",
+    "js-yaml": "^3.14.0",
     "lodash": "^4.17.19"
   },
   "devDependencies": {
