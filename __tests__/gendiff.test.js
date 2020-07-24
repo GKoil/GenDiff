@@ -6,18 +6,33 @@ import gendiff from '../src/index.js';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
+
+const findPathFile = (file) => `${__dirname}/../__fixtures__/${file}`;
+const readFile = (file) => fs.readFileSync(`${__dirname}/../__fixtures__/${file}`, 'utf8');
+
+let result;
+beforeEach(() => {
+  result = readFile('result.txt');
+})
+
 test('findDifferencesJSON', async () => {
-  const beforeFile = `${__dirname}/../__fixtures__/before.json`;
-  const afterFile = `${__dirname}/../__fixtures__/after.json`;
-  const result = await fs.readFileSync(`${__dirname}/../__fixtures__/result.txt`, 'utf8');
+  const beforeFile = findPathFile('before.json');
+  const afterFile = findPathFile('after.json');
+  
 
   const difference = gendiff(beforeFile, afterFile);
   expect(difference).toEqual(result);
 });
 test('findDifferencesYAML', async () => {
-  const beforeFileJSON = `${__dirname}/../__fixtures__/before.json`;
-  const afterFileYAML = `${__dirname}/../__fixtures__/after.yml`;
-  const result = await fs.readFileSync(`${__dirname}/../__fixtures__/result.txt`, 'utf8');
+  const beforeFileJSON = findPathFile('before.json');
+  const afterFileYAML = findPathFile('after.yml');
+
+  const difference = gendiff(beforeFileJSON, afterFileYAML);
+  expect(difference).toEqual(result);
+});
+test('findDifferencesINI', async () => {
+  const beforeFileJSON = findPathFile('before.json');
+  const afterFileYAML = findPathFile('after.ini');
 
   const difference = gendiff(beforeFileJSON, afterFileYAML);
   expect(difference).toEqual(result);
