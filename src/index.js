@@ -9,27 +9,27 @@ export default (file1, file2) => {
   const parseBeforeFile = parser(beforeFile, file1);
   const parseAfterFile = parser(afterFile, file2);
 
-  let result = '';
+  const commonFile = { ...parseBeforeFile, ...parseAfterFile };
+  const keys = Object.keys(commonFile);
 
-  const entriesFileBefore = Object.entries(parseBeforeFile);
-  const entriesFileAfter = Object.entries(parseAfterFile);
-
-  entriesFileBefore.forEach(([key, value]) => {
-    if (parseAfterFile[key] === value) {
-      result += `    ${key}: ${value} \n`;
-      return;
+  const getDiff = keys.reduce((acc, key) => {
+    if (!_.has(parseBeforeFile, key)) {
+      acc.push(`  + ${key}: ${parseAfterFile[key]}`);
+      return acc;
     }
     if (!_.has(parseAfterFile, key)) {
-      result += `  - ${key}: ${value} \n`;
-      return;
+      acc.push(`  - ${key}: ${parseBeforeFile[key]}`);
+      return acc;
     }
-    result += `  + ${key}: ${parseAfterFile[key]} \n  - ${key}: ${value} \n`;
-  });
-  entriesFileAfter.forEach(([key, value]) => {
-    if (!_.has(parseBeforeFile, key)) {
-      result += `  - ${key}: ${value} \n`;
+    if (parseBeforeFile[key] !== parseAfterFile[key]) {
+      acc.push(`  + ${key}: ${parseAfterFile[key]}`);
+      acc.push(`  - ${key}: ${parseBeforeFile[key]}`);
+      return acc;
     }
-  });
+    acc.push(`    ${key}: ${commonFile[key]}`);
+    return acc;
+  }, [])
+    .join('\n');
 
-  return `{ \n${result}}`;
+  return `{\n${getDiff}\n}`;
 };
