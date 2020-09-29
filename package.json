@@ -1,7 +1,7 @@
 {
   "name": "frontend-project-lvl2",
   "version": "1.0.0",
-  "description": "",
+  "description": "gendiff will help you find the difference between two [json/yaml/ini] files",
   "type": "module",
   "main": "src/index.js",
   "bin": {
