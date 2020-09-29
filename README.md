@@ -6,7 +6,7 @@
 [![Dependency Status](https://david-dm.org/GKoil/frontend-project-lvl2.svg)](https://david-dm.org/GKoil/frontend-project-lvl2) [![devDependency Status](https://david-dm.org/GKoil/frontend-project-lvl2/dev-status.svg)](https://david-dm.org/GKoil/frontend-project-lvl2?type=dev)
 [![time tracker](https://wakatime.com/badge/github/GKoil/frontend-project-lvl2.svg)](https://wakatime.com/badge/github/GKoil/frontend-project-lvl2)
 
-## How to work it?
+## How it works?
 ### `json`
 [![asciicast](https://asciinema.org/a/tTxIuWeWvQajdlDPPLjWMO5sG.svg)](https://asciinema.org/a/tTxIuWeWvQajdlDPPLjWMO5sG)
 
