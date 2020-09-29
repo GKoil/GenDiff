@@ -5,3 +5,13 @@
 [![Test Coverage](https://api.codeclimate.com/v1/badges/89c36d79620294a2c270/test_coverage)](https://codeclimate.com/github/GKoil/frontend-project-lvl2/test_coverage)
 [![Dependency Status](https://david-dm.org/GKoil/frontend-project-lvl2.svg)](https://david-dm.org/GKoil/frontend-project-lvl2) [![devDependency Status](https://david-dm.org/GKoil/frontend-project-lvl2/dev-status.svg)](https://david-dm.org/GKoil/frontend-project-lvl2?type=dev)
 [![time tracker](https://wakatime.com/badge/github/GKoil/frontend-project-lvl2.svg)](https://wakatime.com/badge/github/GKoil/frontend-project-lvl2)
+
+## How to work it?
+### `json`
+[![asciicast](https://asciinema.org/a/tTxIuWeWvQajdlDPPLjWMO5sG.svg)](https://asciinema.org/a/tTxIuWeWvQajdlDPPLjWMO5sG)
+
+### `yaml | yml`
+[![asciicast](https://asciinema.org/a/JGwRLxGeJcIdBtwQPZIRjL1Ef.svg)](https://asciinema.org/a/JGwRLxGeJcIdBtwQPZIRjL1Ef)
+
+### `ini`
+[![asciicast](https://asciinema.org/a/oACXkITWrQnMn4h6W09Flr206.svg)](https://asciinema.org/a/oACXkITWrQnMn4h6W09Flr206)
