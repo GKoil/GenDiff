@@ -8,7 +8,7 @@
 
 ## How it works?
 ### `json`
-[![asciicast](https://asciinema.org/a/tTxIuWeWvQajdlDPPLjWMO5sG.svg)](https://asciinema.org/a/tTxIuWeWvQajdlDPPLjWMO5sG)
+[![asciicast](https://asciinema.org/a/ZqAakqhHUlrIiIniajbFpiA1G.svg)](https://asciinema.org/a/ZqAakqhHUlrIiIniajbFpiA1G)
 
 ### `yaml | yml`
 [![asciicast](https://asciinema.org/a/JGwRLxGeJcIdBtwQPZIRjL1Ef.svg)](https://asciinema.org/a/JGwRLxGeJcIdBtwQPZIRjL1Ef)
