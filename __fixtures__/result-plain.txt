@@ -1,0 +1,8 @@
+Property 'setting3' was updated. From true to [complex value]
+Property 'setting4' was updated. From [complex value] to false
+Property 'timeout' was updated. From 50 to 20
+Property 'proxy' was removed
+Property 'follow' was removed
+Property 'setting6.doge.wow' was updated. From 'so much' to 'so hot'
+Property 'setting6.key' was removed
+Property 'verbose' was added with value: true

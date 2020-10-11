@@ -1,4 +1,8 @@
 {
+  "setting3": {
+    "key": "value"
+  },
+  "setting4": false,
   "timeout": 20,
   "verbose": true,
   "host": "hexlet.io",
