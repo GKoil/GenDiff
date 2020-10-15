@@ -1,52 +1,70 @@
+import _ from 'lodash';
 import {
-  getKey, getStatus, getValues, getOldValue, getNewValue, isList, getChildren,
+  getKey, getStatus, getValues, getOldValue, getNewValue, getChildren,
 } from '../ast/node.js';
 
-const stylish = (tree, indentCount = 0) => {
-  const diff = tree.reduce((acc, node) => {
-    const makeList = (key, status, value, count) => {
-      const indent = ' '.repeat(count);
+const getLine = (key, status, oldValue, newValue, spaces = '', list) => {
+  if (list === true) {
+    return `${spaces}  ${key}: ${newValue || oldValue}`;
+  }
+  if (status === 'add') {
+    return `${spaces}+ ${key}: ${newValue}`;
+  }
+  if (status === 'delete') {
+    return `${spaces}- ${key}: ${oldValue}`;
+  }
+  if (status === 'update') {
+    return `${spaces}- ${key}: ${oldValue}\n${spaces}+ ${key}: ${newValue}`;
+  }
+  return `${spaces}  ${key}: ${newValue}`;
+};
 
-      if (status === 'add') {
-        return `${indent}+ ${key}: ${getNewValue(value)}`;
+const stylish = (value, spaceCount = 2) => {
+  const iter = (tree, depth, list) => {
+    const replacer = ' ';
+    const deepSpaceCount = spaceCount + depth;
+    const spaces = replacer.repeat(deepSpaceCount);
+    const currentSpaces = replacer.repeat(depth);
+
+    const lines = tree.reduce((acc, node) => {
+      const key = getKey(node);
+      const status = getStatus(node);
+      const values = getValues(node);
+      const oldValue = getOldValue(values);
+      const newValue = getNewValue(values);
+      const children = getChildren(node);
+
+      if (!_.isObject(oldValue) && !_.isObject(newValue)) {
+        return [...acc, getLine(key, status, oldValue, newValue, spaces, list)];
       }
-      if (status === 'delete') {
-        return `${indent}- ${key}: ${getOldValue(value)}`;
+      if (_.isObject(oldValue) && _.isObject(newValue)) {
+        const makeNode = iter(children, deepSpaceCount);
+        return [...acc, `${spaces}  ${key}: ${makeNode}`];
       }
-      if (status === 'update') {
-        return `${indent}- ${key}: ${getOldValue(value)}\n${indent}+ ${key}: ${getNewValue(value)}`;
+      const isOldValueString = _.isObject(oldValue) && !_.isObject(newValue);
+      const isNewValueString = !_.isObject(oldValue) && _.isObject(newValue);
+      if (isOldValueString || isNewValueString) {
+        const listValue = _.isObject(oldValue) ? newValue : oldValue;
+        const listStatus = !_.isObject(oldValue) ? 'delete' : 'add';
+        const nodeStatus = listStatus === 'delete' ? '+' : '-';
+
+        const makeList = getLine(key, listStatus, listValue, listValue, spaces);
+        const makeNode = iter(children, deepSpaceCount, true);
+
+        const makeString = `${makeList}\n${spaces}${nodeStatus} ${key}: ${makeNode}`;
+        return [...acc, makeString];
       }
-      return `${indent}  ${key}: ${getNewValue(value)}`;
-    };
-    const makeNode = (key, status, children, count) => {
-      const indent = ' '.repeat(count);
-      const value = stylish(children, count);
-      const stylishValue = `{\n${value}\n${indent}}`;
 
-      if (status === 'add') {
-        return `${indent}+ ${key}: ${stylishValue}`;
-      }
-      if (status === 'delete') {
-        return `${indent}- ${key}: ${stylishValue}`;
-      }
-      return `${indent}  ${key}: ${stylishValue}`;
-    };
+      return acc;
+    }, []);
 
-    const key = getKey(node);
-    const status = getStatus(node);
-    const values = getValues(node);
+    return [
+      '{',
+      ...lines,
+      `${currentSpaces}}`,
+    ].join('\n');
+  };
 
-    if (isList(node)) {
-      const list = makeList(key, status, values, indentCount + 2);
-      return [...acc, list];
-    }
-
-    const children = getChildren(node);
-    const newNode = makeNode(key, status, children, indentCount + 2);
-    return [...acc, newNode];
-  }, [])
-    .join('\n');
-
-  return diff; // TODO: fix output format
+  return iter(value, 0);
 };
 export default stylish;
