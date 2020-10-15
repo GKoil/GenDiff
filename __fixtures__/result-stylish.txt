@@ -1,4 +1,12 @@
 {
+  - setting3: true
+  + setting3: {
+      key: value
+  }
+  + setting4: false
+  - setting4: {
+      key: value
+  }
     host: hexlet.io
   - timeout: 50
   + timeout: 20
