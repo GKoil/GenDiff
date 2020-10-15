@@ -21,7 +21,8 @@ const getNode = (before, after) => {
     };
 
     const status = getStatus(oldValue, newValue);
-    const children = _.isObject(common[key]) ? getNode(before[key], after[key]) : null;
+    const hasChildren = _.isObject(before[key]) || _.isObject(after[key]);
+    const children = hasChildren ? getNode(before[key], after[key]) : null;
 
     const tree = {
       key,
