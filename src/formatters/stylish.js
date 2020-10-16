@@ -41,9 +41,9 @@ const stylish = (value, spaceCount = 2) => {
         const makeNode = iter(children, deepSpaceCount);
         return [...acc, `${spaces}  ${key}: ${makeNode}`];
       }
-      const isOldValueString = _.isObject(oldValue) && !_.isObject(newValue);
-      const isNewValueString = !_.isObject(oldValue) && _.isObject(newValue);
-      if (isOldValueString || isNewValueString) {
+      const isOldValueNotObject = _.isObject(oldValue) && !_.isObject(newValue);
+      const isNewValueNotObject = !_.isObject(oldValue) && _.isObject(newValue);
+      if (isOldValueNotObject || isNewValueNotObject) {
         const listValue = _.isObject(oldValue) ? newValue : oldValue;
         const listStatus = !_.isObject(oldValue) ? 'delete' : 'add';
         const nodeStatus = listStatus === 'delete' ? '+' : '-';

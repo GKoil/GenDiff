@@ -3,7 +3,7 @@ import {
   getKey, getStatus, getValues, getOldValue, getNewValue, isList, getChildren,
 } from '../ast/node.js';
 
-const makeList = (key, status, values) => {
+const getLine = (key, status, values) => {
   const oldValue = _.isObject(getOldValue(values)) ? '[complex value]' : getOldValue(values);
   const newValue = _.isObject(getNewValue(values)) ? '[complex value]' : getNewValue(values);
 
@@ -24,19 +24,20 @@ const plain = (tree, stackKey = '') => {
     const key = getKey(node);
     const status = getStatus(node);
     const values = getValues(node);
+    const oldValue = getOldValue(values);
+    const newValue = getNewValue(values);
     const newStackKey = `${stackKey}.${key}`;
 
     if (isList(node)) {
-      const list = makeList(newStackKey, status, values);
-      return [...acc, list];
+      const line = getLine(newStackKey, status, values);
+      return [...acc, line];
     }
 
-    const isObjectValue = _.isObject(getOldValue(values)) || _.isObject(getNewValue(values));
-    const isAllObjectValue = _.isObject(getOldValue(values)) && _.isObject(getNewValue(values));
-    const isNullValue = getOldValue(values) === null || getNewValue(values) === null;
-    if (isObjectValue && !isAllObjectValue && !isNullValue) {
-      const list = makeList(newStackKey, status, values);
-      return [...acc, list];
+    const isOldValueNotObject = _.isObject(oldValue) && !_.isObject(newValue);
+    const isNewValueNotObject = !_.isObject(oldValue) && _.isObject(newValue);
+    if (isOldValueNotObject || isNewValueNotObject) {
+      const line = getLine(newStackKey, status, values);
+      return [...acc, line];
     }
 
     const children = getChildren(node);
