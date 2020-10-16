@@ -12,9 +12,11 @@ const readFile = (file) => fs.readFileSync(getFixturePath(file), 'utf8');
 
 let resultStylish;
 let resultPlain;
+let resultJSON;
 beforeEach(() => {
   resultStylish = readFile('result-stylish.txt');
   resultPlain = readFile('result-plain.txt');
+  resultJSON = readFile('result-json.txt');
 })
 
 test('findDifferencesJSON', async () => {
@@ -25,6 +27,8 @@ test('findDifferencesJSON', async () => {
   expect(differenceStylish).toEqual(resultStylish);
   const differencePlain = gendiff(beforeFileJSON, afterFileJSON, 'plain');
   expect(differencePlain).toEqual(resultPlain);
+  const differenceJSON = gendiff(beforeFileJSON, afterFileJSON, 'json');
+  expect(differenceJSON).toEqual(resultJSON);
 });
 test('findDifferencesYAML', async () => {
   const beforeFileJSON = getFixturePath('before.json');
@@ -34,6 +38,8 @@ test('findDifferencesYAML', async () => {
   expect(differenceStylish).toEqual(resultStylish);
   const differencePlain = gendiff(beforeFileJSON, afterFileYAML, 'plain');
   expect(differencePlain).toEqual(resultPlain);
+  const differenceJSON = gendiff(beforeFileJSON, afterFileYAML, 'json');
+  expect(differenceJSON).toEqual(resultJSON);
 });
 test('findDifferencesINI', async () => {
   const beforeFileJSON = getFixturePath('before.json');
@@ -43,4 +49,6 @@ test('findDifferencesINI', async () => {
   expect(differenceStylish).toEqual(resultStylish);
   const differencePlain = gendiff(beforeFileJSON, afterFileINI, 'plain');
   expect(differencePlain).toEqual(resultPlain);
+  const differenceJSON = gendiff(beforeFileJSON, afterFileINI, 'json');
+  expect(differenceJSON).toEqual(resultJSON);
 });
