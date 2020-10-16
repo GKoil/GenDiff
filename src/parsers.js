@@ -1,6 +1,6 @@
 import path from 'path';
 import yaml from 'js-yaml';
-import ini from 'ini';
+import ini from '@iarna/toml';
 
 export default (fileContent, file) => {
   const formatFile = path.extname(file);

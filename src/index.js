@@ -11,6 +11,5 @@ export default (file1, file2, format) => {
   const parseAfterFile = parser(afterFile, file2);
 
   const ast = getNode(parseBeforeFile, parseAfterFile);
-  // return JSON.stringify(ast, null, ' ');
   return getFormat(ast, format);
 };
