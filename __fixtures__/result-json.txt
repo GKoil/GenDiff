@@ -1,0 +1,140 @@
+[
+ {
+  "key": "setting3",
+  "status": "update",
+  "values": {
+   "oldValue": true,
+   "newValue": {
+    "key": "value"
+   }
+  },
+  "children": [
+   {
+    "key": "key",
+    "status": "add",
+    "values": {
+     "oldValue": null,
+     "newValue": "value"
+    },
+    "children": null
+   }
+  ]
+ },
+ {
+  "key": "setting4",
+  "status": "update",
+  "values": {
+   "oldValue": {
+    "key": "value"
+   },
+   "newValue": false
+  },
+  "children": [
+   {
+    "key": "key",
+    "status": "delete",
+    "values": {
+     "oldValue": "value",
+     "newValue": null
+    },
+    "children": null
+   }
+  ]
+ },
+ {
+  "key": "host",
+  "status": "stay",
+  "values": {
+   "oldValue": "hexlet.io",
+   "newValue": "hexlet.io"
+  },
+  "children": null
+ },
+ {
+  "key": "timeout",
+  "status": "update",
+  "values": {
+   "oldValue": 50,
+   "newValue": 20
+  },
+  "children": null
+ },
+ {
+  "key": "proxy",
+  "status": "delete",
+  "values": {
+   "oldValue": "123.234.53.22",
+   "newValue": null
+  },
+  "children": null
+ },
+ {
+  "key": "follow",
+  "status": "delete",
+  "values": {
+   "oldValue": false,
+   "newValue": null
+  },
+  "children": null
+ },
+ {
+  "key": "setting6",
+  "status": "update",
+  "values": {
+   "oldValue": {
+    "doge": {
+     "wow": "so much"
+    },
+    "key": "value"
+   },
+   "newValue": {
+    "doge": {
+     "wow": "so hot"
+    }
+   }
+  },
+  "children": [
+   {
+    "key": "doge",
+    "status": "update",
+    "values": {
+     "oldValue": {
+      "wow": "so much"
+     },
+     "newValue": {
+      "wow": "so hot"
+     }
+    },
+    "children": [
+     {
+      "key": "wow",
+      "status": "update",
+      "values": {
+       "oldValue": "so much",
+       "newValue": "so hot"
+      },
+      "children": null
+     }
+    ]
+   },
+   {
+    "key": "key",
+    "status": "delete",
+    "values": {
+     "oldValue": "value",
+     "newValue": null
+    },
+    "children": null
+   }
+  ]
+ },
+ {
+  "key": "verbose",
+  "status": "add",
+  "values": {
+   "oldValue": null,
+   "newValue": true
+  },
+  "children": null
+ }
+]
