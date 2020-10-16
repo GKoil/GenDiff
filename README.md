@@ -12,6 +12,8 @@ stylish format:
 [![asciicast](https://asciinema.org/a/ZqAakqhHUlrIiIniajbFpiA1G.svg)](https://asciinema.org/a/ZqAakqhHUlrIiIniajbFpiA1G)
 plain format:
 [![asciicast](https://asciinema.org/a/Jt2Rzp1r4pBBRoYCgv8RTksd5.svg)](https://asciinema.org/a/Jt2Rzp1r4pBBRoYCgv8RTksd5)
+json format:
+[![asciicast](https://asciinema.org/a/IEev17J6gbip0xCgIkEHXF4ox.svg)](https://asciinema.org/a/IEev17J6gbip0xCgIkEHXF4ox)
 
 ### `yaml | yml`
 [![asciicast](https://asciinema.org/a/JGwRLxGeJcIdBtwQPZIRjL1Ef.svg)](https://asciinema.org/a/JGwRLxGeJcIdBtwQPZIRjL1Ef)
