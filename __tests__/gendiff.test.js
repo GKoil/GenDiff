@@ -1,13 +1,15 @@
+/* eslint-disable no-underscore-dangle */
+
 import fs from 'fs';
 import { fileURLToPath } from 'url';
-import { dirname } from 'path';
+import path from 'path';
 import gendiff from '../src/index.js';
 
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+const __dirname = path.dirname(__filename);
 
+const getFixturePath = (file) => path.join(__dirname, '..', '__fixtures__', file);
 
-const getFixturePath = (file) => `${__dirname}/../__fixtures__/${file}`;
 const readFile = (file) => fs.readFileSync(getFixturePath(file), 'utf8');
 
 let resultStylish;
@@ -17,7 +19,7 @@ beforeEach(() => {
   resultStylish = readFile('result-stylish.txt');
   resultPlain = readFile('result-plain.txt');
   resultJSON = readFile('result-json.txt');
-})
+});
 
 test('findDifferencesJSON', async () => {
   const beforeFileJSON = getFixturePath('before.json');
