@@ -15,39 +15,39 @@ const readFile = (file) => fs.readFileSync(getFixturePath(file), 'utf8');
 let resultStylish;
 let resultPlain;
 let resultJSON;
-beforeEach(() => {
+beforeAll(() => {
   resultStylish = readFile('result-stylish.txt');
   resultPlain = readFile('result-plain.txt');
   resultJSON = readFile('result-json.txt');
 });
 
-test('findDifferencesJSON', async () => {
+test('findDifferencesJSON', () => {
   const beforeFileJSON = getFixturePath('before.json');
   const afterFileJSON = getFixturePath('after.json');
 
-  const differenceStylish = gendiff(beforeFileJSON, afterFileJSON, 'stylish');
+  const differenceStylish = gendiff(beforeFileJSON, afterFileJSON);
   expect(differenceStylish).toEqual(resultStylish);
   const differencePlain = gendiff(beforeFileJSON, afterFileJSON, 'plain');
   expect(differencePlain).toEqual(resultPlain);
   const differenceJSON = gendiff(beforeFileJSON, afterFileJSON, 'json');
   expect(differenceJSON).toEqual(resultJSON);
 });
-test('findDifferencesYAML', async () => {
+test('findDifferencesYAML', () => {
   const beforeFileJSON = getFixturePath('before.json');
   const afterFileYAML = getFixturePath('after.yml');
 
-  const differenceStylish = gendiff(beforeFileJSON, afterFileYAML, 'stylish');
+  const differenceStylish = gendiff(beforeFileJSON, afterFileYAML);
   expect(differenceStylish).toEqual(resultStylish);
   const differencePlain = gendiff(beforeFileJSON, afterFileYAML, 'plain');
   expect(differencePlain).toEqual(resultPlain);
   const differenceJSON = gendiff(beforeFileJSON, afterFileYAML, 'json');
   expect(differenceJSON).toEqual(resultJSON);
 });
-test('findDifferencesINI', async () => {
+test('findDifferencesINI', () => {
   const beforeFileJSON = getFixturePath('before.json');
   const afterFileINI = getFixturePath('after.ini');
 
-  const differenceStylish = gendiff(beforeFileJSON, afterFileINI, 'stylish');
+  const differenceStylish = gendiff(beforeFileJSON, afterFileINI);
   expect(differenceStylish).toEqual(resultStylish);
   const differencePlain = gendiff(beforeFileJSON, afterFileINI, 'plain');
   expect(differencePlain).toEqual(resultPlain);
