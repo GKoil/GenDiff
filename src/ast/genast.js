@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-const getNode = (before, after) => {
+const getAST = (before, after) => {
   const common = { ...before, ...after };
   const keys = Object.keys(common);
 
@@ -22,7 +22,7 @@ const getNode = (before, after) => {
 
     const status = getStatus(oldValue, newValue);
     const hasChildren = _.isObject(before[key]) || _.isObject(after[key]);
-    const children = hasChildren ? getNode(before[key], after[key]) : null;
+    const children = hasChildren ? getAST(before[key], after[key]) : null;
 
     const tree = {
       key,
@@ -37,4 +37,4 @@ const getNode = (before, after) => {
   }, []);
 };
 
-export default getNode;
+export default getAST;

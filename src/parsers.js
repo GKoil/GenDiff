@@ -1,16 +1,15 @@
-import path from 'path';
 import yaml from 'js-yaml';
 import ini from '@iarna/toml';
 
-export default (fileContent, file) => {
-  const formatFile = path.extname(file);
-
+export default (fileContent, formatFile) => {
   switch (formatFile) {
-    case '.yml' || '.yaml':
+    case 'yml' || 'yaml':
       return yaml.safeLoad(fileContent);
-    case '.ini':
+    case 'ini':
       return ini.parse(fileContent);
-    default:
+    case 'json':
       return JSON.parse(fileContent);
+    default:
+      throw new Error('Don\'t support this file');
   }
 };
