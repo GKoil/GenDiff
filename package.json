@@ -14,7 +14,14 @@
     "type": "git",
     "url": "git+https://github.com/GKoil/frontend-project-lvl2.git"
   },
-  "author": "",
+  "keywords": [
+    "diff",
+    "diff files",
+    "json diff",
+    "yaml diff",
+    "ini diff"
+  ],
+  "author": "gkoil",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/GKoil/frontend-project-lvl2/issues"
