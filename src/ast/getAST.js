@@ -1,40 +1,38 @@
 import _ from 'lodash';
 
 const getAST = (before, after) => {
-  const common = { ...before, ...after };
-  const keys = Object.keys(common);
-
-  return keys.reduce((acc, key) => {
+  const keys = _.union(Object.keys(before), Object.keys(after));
+  return keys.flatMap((key) => {
     const oldValue = _.has(before, key) ? before[key] : null;
     const newValue = _.has(after, key) ? after[key] : null;
-    const getStatus = (value1, value2) => {
-      if (value1 === null) {
-        return 'add';
-      }
-      if (value2 === null) {
-        return 'delete';
-      }
-      if (value1 !== value2) {
-        return 'update';
-      }
-      return 'stay';
-    };
+    const [beforeHasChildren, afterHasChildren] = [_.isObject(before[key]), _.isObject(after[key])];
 
-    const status = getStatus(oldValue, newValue);
-    const hasChildren = _.isObject(before[key]) || _.isObject(after[key]);
-    const children = hasChildren ? getAST(before[key], after[key]) : null;
+    if (beforeHasChildren && afterHasChildren) {
+      const children = getAST(before[key], after[key]);
+      return {
+        key, status: 'nested', children,
+      };
+    }
+    if (oldValue === null) {
+      return {
+        key, status: 'added', value: newValue,
+      };
+    }
+    if (newValue === null) {
+      return {
+        key, status: 'deleted', value: oldValue,
+      };
+    }
+    if (oldValue !== newValue) {
+      return {
+        key, status: 'updated', oldValue, newValue,
+      };
+    }
 
-    const tree = {
-      key,
-      status,
-      values: {
-        oldValue,
-        newValue,
-      },
-      children,
+    return {
+      key, status: 'not changed', value: newValue,
     };
-    return [...acc, tree];
-  }, []);
+  });
 };
 
 export default getAST;
