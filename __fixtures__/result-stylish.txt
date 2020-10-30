@@ -3,10 +3,10 @@
   + setting3: {
       key: value
   }
-  + setting4: false
   - setting4: {
       key: value
   }
+  + setting4: false
     host: hexlet.io
   - timeout: 50
   + timeout: 20
