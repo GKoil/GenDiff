@@ -6,7 +6,7 @@ const getSign = {
   'not changed': ' ',
 };
 
-const stylish = (value, spaceCount = 2) => {
+const stylish = (data, spaceCount = 2) => {
   const iter = (tree, depth) => {
     const replacer = ' ';
     const deepSpaceCount = spaceCount + depth;
@@ -18,27 +18,28 @@ const stylish = (value, spaceCount = 2) => {
     }
 
     if (!_.isArray(tree)) {
-      const values = Object
+      const lines = Object
         .entries(tree)
         .map(([key, value]) => `${spaces}  ${key}: ${value}`);
       return [
         '{',
-        ...values,
+        ...lines,
         `${currentSpaces}}`,
       ].join('\n');
     }
     const lines = tree.map((node) => {
-      if (node.status === 'updated') {
+      const { key, status } = node;
+      if (status === 'updated') {
         const oldValue = iter(node.oldValue, deepSpaceCount);
         const newValue = iter(node.newValue, deepSpaceCount);
-        return `${spaces}- ${node.key}: ${oldValue}\n${spaces}+ ${node.key}: ${newValue}`;
+        return `${spaces}- ${key}: ${oldValue}\n${spaces}+ ${key}: ${newValue}`;
       }
-      if (node.status === 'nested') {
-        const makeNode = iter(node.children, deepSpaceCount);
-        return `${spaces}  ${node.key}: ${makeNode}`;
+      if (status === 'nested') {
+        const children = iter(node.children, deepSpaceCount);
+        return `${spaces}  ${key}: ${children}`;
       }
       const value = iter(node.value);
-      return `${spaces}${getSign[node.status]} ${node.key}: ${value}`;
+      return `${spaces}${getSign[status]} ${key}: ${value}`;
     });
 
     return [
@@ -48,7 +49,7 @@ const stylish = (value, spaceCount = 2) => {
     ].join('\n');
   };
 
-  return iter(value, 0);
+  return iter(data, 0);
 };
 
 export default stylish;
