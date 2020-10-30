@@ -5,10 +5,9 @@ import getAST from './getAST.js';
 import formatAST from './formatters/index.js';
 
 const getContent = (filePath) => {
-  const readFile = (file) => fs.readFileSync(path.resolve(process.cwd(), file), 'utf8');
-  const getFormatFile = (file) => path.extname(file).slice(1);
+  const contentFile = fs.readFileSync(path.resolve(process.cwd(), filePath), 'utf8');
+  const formatFile = path.extname(filePath).slice(1);
 
-  const [contentFile, formatFile] = [readFile(filePath), getFormatFile(filePath)];
   return parse(contentFile, formatFile);
 };
 
