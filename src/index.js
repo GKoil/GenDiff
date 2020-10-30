@@ -1,19 +1,21 @@
 import fs from 'fs';
 import path from 'path';
 import parse from './parsers.js';
-import getAST from './ast/getAST.js';
+import getAST from './getAST.js';
 import formatAST from './formatters/index.js';
 
-const readFile = (filePath) => fs.readFileSync(path.resolve(process.cwd(), filePath), 'utf8');
-const getFormatFile = (filePath) => path.extname(filePath).slice(1);
+const getContent = (filePath) => {
+  const readFile = (file) => fs.readFileSync(path.resolve(process.cwd(), file), 'utf8');
+  const getFormatFile = (file) => path.extname(file).slice(1);
+
+  const [contentFile, formatFile] = [readFile(filePath), getFormatFile(filePath)];
+  return parse(contentFile, formatFile);
+};
 
 export default (filePath1, filePath2, format = 'stylish') => {
-  const [contentFile1, formatFile1] = [readFile(filePath1), getFormatFile(filePath1)];
-  const [contentFile2, formatFile2] = [readFile(filePath2), getFormatFile(filePath2)];
+  const content1 = getContent(filePath1);
+  const content2 = getContent(filePath2);
 
-  const parsedContent1 = parse(contentFile1, formatFile1);
-  const parsedContent2 = parse(contentFile2, formatFile2);
-
-  const ast = getAST(parsedContent1, parsedContent2);
+  const ast = getAST(content1, content2);
   return formatAST(ast, format);
 };
