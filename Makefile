@@ -10,6 +10,9 @@ unlink:
 lint:
 	npx eslint .
 
+test:
+	npx -n --experimental-vm-modules jest --no-warnings
+
 test-coverage tc:
 	npm test -- --coverage --coverageProvider=v8
 
