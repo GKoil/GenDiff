@@ -3,7 +3,7 @@ import _ from 'lodash';
 const getSign = {
   added: '+',
   deleted: '-',
-  'not changed': ' ',
+  unchanged: ' ',
 };
 
 const stylish = (data, spaceCount = 2) => {

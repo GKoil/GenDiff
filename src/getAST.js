@@ -2,17 +2,16 @@ import _ from 'lodash';
 
 const getAST = (before, after) => {
   const keys = _.union(Object.keys(before), Object.keys(after));
-  return keys.flatMap((key) => {
-    const oldValue = _.has(before, key) ? before[key] : null;
-    const newValue = _.has(after, key) ? after[key] : null;
-    const [beforeHasChildren, afterHasChildren] = [_.isObject(before[key]), _.isObject(after[key])];
-
-    if (beforeHasChildren && afterHasChildren) {
+  return keys.map((key) => {
+    if (_.isPlainObject(before[key]) && _.isPlainObject(after[key])) {
       const children = getAST(before[key], after[key]);
       return {
         key, status: 'nested', children,
       };
     }
+
+    const oldValue = _.has(before, key) ? before[key] : null;
+    const newValue = _.has(after, key) ? after[key] : null;
     if (oldValue === null) {
       return {
         key, status: 'added', value: newValue,
@@ -23,14 +22,13 @@ const getAST = (before, after) => {
         key, status: 'deleted', value: oldValue,
       };
     }
-    if (oldValue !== newValue) {
+    if (!_.isEqual(oldValue, newValue)) {
       return {
         key, status: 'updated', oldValue, newValue,
       };
     }
-
     return {
-      key, status: 'not changed', value: newValue,
+      key, status: 'unchanged', value: newValue,
     };
   });
 };
