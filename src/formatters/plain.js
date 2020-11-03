@@ -1,28 +1,36 @@
 import _ from 'lodash';
 
+const getOutputValue = (value) => {
+  if (_.isObject(value)) {
+    return '[complex value]';
+  }
+  if (_.isString(value)) {
+    return `'${value}'`;
+  }
+  return value;
+};
+
 const plain = (tree, stackKey = []) => {
-  const diff = tree.map((node) => {
+  const diff = tree.flatMap((node) => {
     const key = [...stackKey, node.key].join('.');
     const { status } = node;
-    if (status === 'deleted') {
-      return `Property '${key}' was removed`;
-    }
-    if (status === 'added') {
-      const value = _.isObject(node.value) ? '[complex value]' : node.value;
-      return `Property '${key}' was ${status} with value: ${value}`;
-    }
-    if (status === 'updated') {
-      const oldValue = _.isObject(node.oldValue) ? '[complex value]' : node.oldValue;
-      const newValue = _.isObject(node.newValue) ? '[complex value]' : node.newValue;
-      return `Property '${key}' was ${status}. From ${oldValue} to ${newValue}`;
-    }
-    if (status === 'nested') {
-      return plain(node.children, [key]);
-    }
-    return null;
-  });
 
-  return _.filter(diff).join('\n');
+    switch (status) {
+      case 'deleted':
+        return `Property '${key}' was removed`;
+      case 'added':
+        return `Property '${key}' was ${status} with value: ${getOutputValue(node.value)}`;
+      case 'updated':
+        return `Property '${key}' was ${status}. From ${getOutputValue(node.oldValue)} to ${getOutputValue(node.newValue)}`;
+      case 'nested':
+        return plain(node.children, [key]);
+      case 'unchanged':
+        return [];
+      default:
+        throw new Error(`Formatter 'plain' don't support this '${status}' node status`);
+    }
+  });
+  return diff.join('\n');
 };
 
 export default plain;
