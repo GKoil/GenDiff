@@ -1,12 +1,13 @@
 import _ from 'lodash';
 
-const spaceCount = 2;
-
 const getSpaces = (depth) => {
   const replacer = ' ';
+  const spaceCount = 2;
+
   const deepSpaceCount = spaceCount + depth;
   const spaces = replacer.repeat(deepSpaceCount);
   const currentSpaces = replacer.repeat(depth);
+
   return [currentSpaces, spaces, deepSpaceCount];
 };
 
