@@ -11,7 +11,7 @@ const getOutputValue = (value) => {
 };
 
 const plain = (data) => {
-  const iter = (tree, stackKey = []) => {
+  const iter = (tree, stackKey) => {
     const diff = tree.flatMap((node) => {
       const key = [...stackKey, node.key].join('.');
       const { status } = node;
@@ -33,7 +33,7 @@ const plain = (data) => {
     });
     return diff.join('\n');
   };
-  return iter(data);
+  return iter(data, []);
 };
 
 export default plain;
