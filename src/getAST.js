@@ -9,26 +9,23 @@ const getAST = (before, after) => {
         key, status: 'nested', children,
       };
     }
-
-    const oldValue = _.has(before, key) ? before[key] : null;
-    const newValue = _.has(after, key) ? after[key] : null;
-    if (oldValue === null) {
+    if (!_.has(before, key)) {
       return {
-        key, status: 'added', value: newValue,
+        key, status: 'added', value: after[key],
       };
     }
-    if (newValue === null) {
+    if (!_.has(after, key)) {
       return {
-        key, status: 'deleted', value: oldValue,
+        key, status: 'deleted', value: before[key],
       };
     }
-    if (!_.isEqual(oldValue, newValue)) {
+    if (!_.isEqual(before[key], after[key])) {
       return {
-        key, status: 'updated', oldValue, newValue,
+        key, status: 'updated', oldValue: before[key], newValue: after[key],
       };
     }
     return {
-      key, status: 'unchanged', value: newValue,
+      key, status: 'unchanged', value: after[key],
     };
   });
 };
