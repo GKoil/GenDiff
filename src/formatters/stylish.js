@@ -1,21 +1,21 @@
 import _ from 'lodash';
 
-const increaseDepth = (depth, spaceCount = 2) => depth + spaceCount;
+const spaceCount = 2;
 
 const getIndent = (count, replacer = ' ') => replacer.repeat(count);
-const getSpaces = (depth) => {
-  const deepSpaceCount = increaseDepth(depth);
-  return getIndent(deepSpaceCount);
-};
+const getSpaces = (depth) => getIndent(depth);
 const getCurrentSpaces = (depth) => getIndent(depth);
 
 const getOutputTree = (lines, spaces) => `{\n${lines.join('\n')}\n${spaces}}`;
 
+const getLine = (spaces, key, sign, value) => `${spaces}${sign} ${key}: ${value}`;
+
 const getValue = (value, depth) => {
   if (_.isObject(value)) {
+    const increasedDepth = depth + spaceCount;
     const lines = Object
       .entries(value)
-      .map(([key, objectValue]) => `${getSpaces(depth)}  ${key}: ${objectValue}`);
+      .map(([key, objectValue]) => `${getSpaces(increasedDepth)}  ${key}: ${objectValue}`);
     return getOutputTree(lines, getCurrentSpaces(depth));
   }
   return value.toString();
@@ -23,21 +23,22 @@ const getValue = (value, depth) => {
 
 const stylish = (data) => {
   const iter = (tree, depth) => {
-    const spaces = getSpaces(depth);
-    const lines = tree.map((node) => {
-      const increasedDepth = increaseDepth(depth);
+    const spaces = getSpaces(depth + spaceCount);
+    const lines = tree.flatMap((node) => {
+      const increasedDepth = depth + spaceCount;
       const { key, status } = node;
       switch (status) {
-        case 'updated':
-          return `${spaces}- ${key}: ${getValue(node.oldValue, increasedDepth)}\n${spaces}+ ${key}: ${getValue(node.newValue, increasedDepth)}`;
         case 'nested':
           return `${spaces}  ${key}: ${iter(node.children, increasedDepth)}`;
+        case 'updated':
+          return [getLine(spaces, key, '-', getValue(node.oldValue, increasedDepth)),
+            getLine(spaces, key, '+', getValue(node.newValue, increasedDepth))];
         case 'added':
-          return `${spaces}+ ${key}: ${getValue(node.value, increasedDepth)}`;
+          return getLine(spaces, key, '+', getValue(node.value, increasedDepth));
         case 'deleted':
-          return `${spaces}- ${key}: ${getValue(node.value, increasedDepth)}`;
+          return getLine(spaces, key, '-', getValue(node.value, increasedDepth));
         case 'unchanged':
-          return `${spaces}  ${key}: ${getValue(node.value, increasedDepth)}`;
+          return getLine(spaces, key, ' ', getValue(node.value, increasedDepth));
         default:
           throw new Error(`Formatter 'stylish' don't support this '${status}' node status`);
       }
