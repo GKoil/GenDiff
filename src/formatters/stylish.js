@@ -1,31 +1,25 @@
 import _ from 'lodash';
 
-const spaceCount = 2;
-
 const getIndent = (count, replacer = ' ') => replacer.repeat(count);
-const getSpaces = (depth) => getIndent(depth);
-const getCurrentSpaces = (depth) => getIndent(depth);
-
-const getOutputTree = (lines, spaces) => `{\n${lines.join('\n')}\n${spaces}}`;
-
 const getLine = (spaces, key, sign, value) => `${spaces}${sign} ${key}: ${value}`;
+const getOutputTree = (lines, spaces) => `{\n${lines.join('\n')}\n${spaces}}`;
 
 const getValue = (value, depth) => {
   if (_.isObject(value)) {
-    const increasedDepth = depth + spaceCount;
+    const increasedDepth = depth + 2;
     const lines = Object
       .entries(value)
-      .map(([key, objectValue]) => `${getSpaces(increasedDepth)}  ${key}: ${objectValue}`);
-    return getOutputTree(lines, getCurrentSpaces(depth));
+      .map(([key, objectValue]) => `${getIndent(increasedDepth)}  ${key}: ${objectValue}`);
+    return getOutputTree(lines, getIndent(depth));
   }
   return value.toString();
 };
 
 const stylish = (data) => {
   const iter = (tree, depth) => {
-    const spaces = getSpaces(depth + spaceCount);
+    const spaces = getIndent(depth + 2);
     const lines = tree.flatMap((node) => {
-      const increasedDepth = depth + spaceCount;
+      const increasedDepth = depth + 2;
       const { key, status } = node;
       switch (status) {
         case 'nested':
@@ -43,7 +37,7 @@ const stylish = (data) => {
           throw new Error(`Formatter 'stylish' don't support this '${status}' node status`);
       }
     });
-    return getOutputTree(lines, getCurrentSpaces(depth));
+    return getOutputTree(lines, getIndent(depth));
   };
   return iter(data, 0);
 };
