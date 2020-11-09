@@ -1,38 +1,36 @@
 import _ from 'lodash';
 
 const getIndent = (count, replacer = ' ') => replacer.repeat(count);
-const getLine = (spaces, key, sign, value) => `${spaces}${sign} ${key}: ${value}`;
+const getLine = (depth, key, sign, value) => `${getIndent(depth + 2)}${sign} ${key}: ${value}`;
 const getOutputTree = (lines, spaces) => `{\n${lines.join('\n')}\n${spaces}}`;
 
 const getValue = (value, depth) => {
   if (_.isObject(value)) {
-    const increasedDepth = depth + 2;
+    const increasedDepth = depth + 4;
     const lines = Object
       .entries(value)
       .map(([key, objectValue]) => `${getIndent(increasedDepth)}  ${key}: ${objectValue}`);
-    return getOutputTree(lines, getIndent(depth));
+    return getOutputTree(lines, getIndent(depth + 2));
   }
   return value.toString();
 };
 
 const stylish = (data) => {
   const iter = (tree, depth) => {
-    const spaces = getIndent(depth + 2);
     const lines = tree.flatMap((node) => {
-      const increasedDepth = depth + 2;
       const { key, status } = node;
       switch (status) {
         case 'nested':
-          return `${spaces}  ${key}: ${iter(node.children, increasedDepth)}`;
+          return `${getIndent(depth + 2)}  ${key}: ${iter(node.children, depth + 2)}`;
         case 'updated':
-          return [getLine(spaces, key, '-', getValue(node.oldValue, increasedDepth)),
-            getLine(spaces, key, '+', getValue(node.newValue, increasedDepth))];
+          return [getLine(depth, key, '-', getValue(node.oldValue, depth)),
+            getLine(depth, key, '+', getValue(node.newValue, depth))];
         case 'added':
-          return getLine(spaces, key, '+', getValue(node.value, increasedDepth));
+          return getLine(depth, key, '+', getValue(node.value, depth));
         case 'deleted':
-          return getLine(spaces, key, '-', getValue(node.value, increasedDepth));
+          return getLine(depth, key, '-', getValue(node.value, depth));
         case 'unchanged':
-          return getLine(spaces, key, ' ', getValue(node.value, increasedDepth));
+          return getLine(depth, key, ' ', getValue(node.value, depth));
         default:
           throw new Error(`Formatter 'stylish' don't support this '${status}' node status`);
       }
