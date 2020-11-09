@@ -2,7 +2,11 @@ import _ from 'lodash';
 
 const getIndent = (count, replacer = ' ') => replacer.repeat(count);
 const getLine = (depth, key, sign, value) => `${getIndent(depth + 2)}${sign} ${key}: ${value}`;
-const getOutputTree = (lines, spaces) => `{\n${lines.join('\n')}\n${spaces}}`;
+const getOutputTree = (lines, spaces) => [
+  '{',
+  ...lines,
+  `${spaces}}`,
+].join('\n');
 
 const getValue = (value, depth) => {
   if (_.isObject(value)) {
