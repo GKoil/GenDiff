@@ -1,7 +1,6 @@
 import _ from 'lodash';
 
 const getIndent = (count, replacer = ' ') => replacer.repeat(count);
-const getLine = (depth, key, sign, value) => `${getIndent(depth + 2)}${sign} ${key}: ${value}`;
 const getOutputTree = (lines, spaces) => [
   '{',
   ...lines,
@@ -19,25 +18,24 @@ const getValue = (value, depth) => {
   return value.toString();
 };
 
+const getLine = {
+  added: (depth, key, value) => `${getIndent(depth + 2)}+ ${key}: ${value}`,
+  deleted: (depth, key, value) => `${getIndent(depth + 2)}- ${key}: ${value}`,
+  unchanged: (depth, key, value) => `${getIndent(depth + 2)}  ${key}: ${value}`,
+};
+
 const stylish = (data) => {
   const iter = (tree, depth) => {
     const lines = tree.flatMap((node) => {
       const { key, status } = node;
-      switch (status) {
-        case 'nested':
-          return `${getIndent(depth + 2)}  ${key}: ${iter(node.children, depth + 2)}`;
-        case 'updated':
-          return [getLine(depth, key, '-', getValue(node.oldValue, depth)),
-            getLine(depth, key, '+', getValue(node.newValue, depth))];
-        case 'added':
-          return getLine(depth, key, '+', getValue(node.value, depth));
-        case 'deleted':
-          return getLine(depth, key, '-', getValue(node.value, depth));
-        case 'unchanged':
-          return getLine(depth, key, ' ', getValue(node.value, depth));
-        default:
-          throw new Error(`Formatter 'stylish' don't support this '${status}' node status`);
+      if (status === 'nested') {
+        return `${getIndent(depth + 2)}  ${key}: ${iter(node.children, depth + 2)}`;
       }
+      if (status === 'updated') {
+        return [getLine.deleted(depth, key, getValue(node.oldValue, depth)),
+          getLine.added(depth, key, getValue(node.newValue, depth))];
+      }
+      return getLine[status](depth, key, node.value);
     });
     return getOutputTree(lines, getIndent(depth));
   };
