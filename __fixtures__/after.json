@@ -1,14 +1,30 @@
 {
-  "setting3": {
-    "key": "value"
+  "product": {
+    "follow": false,
+    "name": "pants",
+    "in stock": false,
+    "comment": "It's a good chose",
+    "other": {
+      "key5": "value5"
+    },
+    "addition": {
+      "key": "value",
+      "what": "??",
+      "doge": {
+        "wow": "so much"
+      }
+    }
   },
-  "setting4": false,
-  "timeout": 20,
-  "verbose": true,
-  "host": "hexlet.io",
-  "setting6": {
-    "doge": {
-      "wow": "so hot"
+  "group1": {
+    "baz": "bars",
+    "nest": "str"
+  },
+  "group3": {
+    "fee": 100500,
+    "deep": {
+      "id": {
+        "number": 45
+      }
     }
   }
 }

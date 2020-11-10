@@ -1,23 +1,43 @@
 {
-  - setting3: true
-  + setting3: {
-      key: value
-  }
-  - setting4: {
-      key: value
-  }
-  + setting4: false
-    host: hexlet.io
-  - timeout: 50
-  + timeout: 20
-  - proxy: 123.234.53.22
-  - follow: false
-    setting6: {
-      doge: {
-      - wow: so much
-      + wow: so hot
+    product: {
+        name: pants
+      - cost: 50
+      - in stock: true
+      + in stock: false
+        addition: {
+            key: value
+            doge: {
+              - wow: 
+              + wow: so much
+            }
+          + what: ??
+        }
+      + follow: false
+      + comment: It's a good chose
+      + other: {
+            key5: value5
+        }
     }
-    - key: value
-  }
-  + verbose: true
+    group1: {
+      - baz: bas
+      + baz: bars
+      - nest: {
+            key: shoes
+        }
+      + nest: str
+    }
+  - group2: {
+        abc: 12345
+        deep: {
+            id: 45
+        }
+    }
+  + group3: {
+        fee: 100500
+        deep: {
+            id: {
+                number: 45
+            }
+        }
+    }
 }
