@@ -11,6 +11,6 @@ export default (ast, format) => {
     case 'json':
       return json(ast);
     default:
-      throw new Error('Not have this output format');
+      throw new Error(`Not have this output '${format}' format`);
   }
 };
