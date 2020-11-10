@@ -1,43 +1,45 @@
 import _ from 'lodash';
 
-const getIndent = (count, replacer = ' ') => replacer.repeat(count);
-const getOutputTree = (lines, spaces) => [
-  '{',
-  ...lines,
-  `${spaces}}`,
-].join('\n');
+const indent = ' '.repeat(4);
+const getIndent = (count) => indent.repeat(count);
+const getStringifyTree = (lines, spaces) => (
+  [
+    '{',
+    ...lines,
+    `${spaces}}`,
+  ].join('\n')
+);
 
-const getValue = (value, depth) => {
-  if (_.isObject(value)) {
-    const increasedDepth = depth + 4;
-    const lines = Object
-      .entries(value)
-      .map(([key, objectValue]) => `${getIndent(increasedDepth)}  ${key}: ${objectValue}`);
-    return getOutputTree(lines, getIndent(depth + 2));
+const getValue = (data, depth) => {
+  if (!_.isObject(data)) {
+    return data;
   }
-  return value.toString();
+  const lines = Object
+    .entries(data)
+    .map(([key, value]) => {
+      const preparedValue = getValue(value, depth + 1);
+      return `${getIndent(depth)}${indent}${key}: ${preparedValue}`;
+    });
+  return getStringifyTree(lines, getIndent(depth));
 };
 
-const getLine = {
-  added: (depth, key, value) => `${getIndent(depth + 2)}+ ${key}: ${value}`,
-  deleted: (depth, key, value) => `${getIndent(depth + 2)}- ${key}: ${value}`,
-  unchanged: (depth, key, value) => `${getIndent(depth + 2)}  ${key}: ${value}`,
+const getStringifyLine = (depth, sign, key, value) => `${getIndent(depth)}  ${sign} ${key}: ${getValue(value, depth + 1)}`;
+const processingNode = {
+  added: (depth, node) => getStringifyLine(depth, '+', node.key, node.value),
+  deleted: (depth, node) => getStringifyLine(depth, '-', node.key, node.value),
+  unchanged: (depth, node) => getStringifyLine(depth, ' ', node.key, node.value),
+  updated: (depth, node) => [getStringifyLine(depth, '-', node.key, node.oldValue), getStringifyLine(depth, '+', node.key, node.newValue)],
 };
 
 const stylish = (data) => {
   const iter = (tree, depth) => {
     const lines = tree.flatMap((node) => {
-      const { key, status } = node;
-      if (status === 'nested') {
-        return `${getIndent(depth + 2)}  ${key}: ${iter(node.children, depth + 2)}`;
+      if (node.status === 'nested') {
+        return `${getIndent(depth)}${indent}${node.key}: ${iter(node.children, depth + 1)}`;
       }
-      if (status === 'updated') {
-        return [getLine.deleted(depth, key, getValue(node.oldValue, depth)),
-          getLine.added(depth, key, getValue(node.newValue, depth))];
-      }
-      return getLine[status](depth, key, node.value);
+      return processingNode[node.status](depth, node);
     });
-    return getOutputTree(lines, getIndent(depth));
+    return getStringifyTree(lines, getIndent(depth));
   };
   return iter(data, 0);
 };
