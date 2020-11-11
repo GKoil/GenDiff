@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-const getOutputValue = (value) => {
+const getValue = (value) => {
   if (_.isObject(value)) {
     return '[complex value]';
   }
@@ -10,26 +10,19 @@ const getOutputValue = (value) => {
   return value;
 };
 
+const getStringifyLine = {
+  added: (key, { value }) => `Property '${key}' was added with value: ${getValue(value)}`,
+  deleted: (key) => `Property '${key}' was removed`,
+  unchanged: () => [],
+  updated: (key, { oldValue, newValue }) => `Property '${key}' was updated. From ${getValue(oldValue)} to ${getValue(newValue)}`,
+  nested: (key, { children }, iter) => iter(children, [key]),
+};
+
 const plain = (data) => {
   const iter = (tree, stackKey) => {
     const diff = tree.flatMap((node) => {
       const key = [...stackKey, node.key].join('.');
-      const { status } = node;
-
-      switch (status) {
-        case 'deleted':
-          return `Property '${key}' was removed`;
-        case 'added':
-          return `Property '${key}' was ${status} with value: ${getOutputValue(node.value)}`;
-        case 'updated':
-          return `Property '${key}' was ${status}. From ${getOutputValue(node.oldValue)} to ${getOutputValue(node.newValue)}`;
-        case 'nested':
-          return iter(node.children, [key]);
-        case 'unchanged':
-          return [];
-        default:
-          throw new Error(`Formatter 'plain' don't support this '${status}' node status`);
-      }
+      return getStringifyLine[node.status](key, node, iter);
     });
     return diff.join('\n');
   };
