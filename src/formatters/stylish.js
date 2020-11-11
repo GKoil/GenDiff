@@ -25,11 +25,11 @@ const getValue = (data, depth) => {
 
 const getStringifyLine = (depth, sign, key, value) => `${getIndent(depth)}  ${sign} ${key}: ${getValue(value, depth + 1)}`;
 const processingNode = {
-  added: (depth, node) => getStringifyLine(depth, '+', node.key, node.value),
-  deleted: (depth, node) => getStringifyLine(depth, '-', node.key, node.value),
-  unchanged: (depth, node) => getStringifyLine(depth, ' ', node.key, node.value),
-  updated: (depth, node) => [getStringifyLine(depth, '-', node.key, node.oldValue), getStringifyLine(depth, '+', node.key, node.newValue)],
-  nested: (depth, node, iter) => getStringifyLine(depth, ' ', node.key, iter(node.children, depth + 1)),
+  added: (depth, { key, value }) => getStringifyLine(depth, '+', key, value),
+  deleted: (depth, { key, value }) => getStringifyLine(depth, '-', key, value),
+  unchanged: (depth, { key, value }) => getStringifyLine(depth, ' ', key, value),
+  updated: (depth, { key, oldValue, newValue }) => [getStringifyLine(depth, '-', key, oldValue), getStringifyLine(depth, '+', key, newValue)],
+  nested: (depth, { key, children }, iter) => getStringifyLine(depth, ' ', key, iter(children, depth + 1)),
 };
 
 const stylish = (data) => {
