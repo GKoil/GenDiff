@@ -29,16 +29,12 @@ const processingNode = {
   deleted: (depth, node) => getStringifyLine(depth, '-', node.key, node.value),
   unchanged: (depth, node) => getStringifyLine(depth, ' ', node.key, node.value),
   updated: (depth, node) => [getStringifyLine(depth, '-', node.key, node.oldValue), getStringifyLine(depth, '+', node.key, node.newValue)],
+  nested: (depth, node, iter) => getStringifyLine(depth, ' ', node.key, iter(node.children, depth + 1)),
 };
 
 const stylish = (data) => {
   const iter = (tree, depth) => {
-    const lines = tree.flatMap((node) => {
-      if (node.status === 'nested') {
-        return `${getIndent(depth)}${indent}${node.key}: ${iter(node.children, depth + 1)}`;
-      }
-      return processingNode[node.status](depth, node);
-    });
+    const lines = tree.flatMap((node) => processingNode[node.status](depth, node, iter));
     return getStringifyTree(lines, getIndent(depth));
   };
   return iter(data, 0);
