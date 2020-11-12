@@ -24,7 +24,7 @@ const getValue = (data, depth) => {
 };
 
 const getStringifyLine = (depth, sign, key, value) => `${getIndent(depth)}  ${sign} ${key}: ${getValue(value, depth + 1)}`;
-const processingNode = {
+const mapping = {
   added: (depth, { key, value }) => getStringifyLine(depth, '+', key, value),
   deleted: (depth, { key, value }) => getStringifyLine(depth, '-', key, value),
   unchanged: (depth, { key, value }) => getStringifyLine(depth, ' ', key, value),
@@ -34,7 +34,7 @@ const processingNode = {
 
 const stylish = (data) => {
   const iter = (tree, depth) => {
-    const lines = tree.flatMap((node) => processingNode[node.status](depth, node, iter));
+    const lines = tree.flatMap((node) => mapping[node.status](depth, node, iter));
     return getStringifyTree(lines, getIndent(depth));
   };
   return iter(data, 0);
