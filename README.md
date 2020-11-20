@@ -6,6 +6,20 @@
 [![Dependency Status](https://david-dm.org/GKoil/frontend-project-lvl2.svg)](https://david-dm.org/GKoil/frontend-project-lvl2) [![devDependency Status](https://david-dm.org/GKoil/frontend-project-lvl2/dev-status.svg)](https://david-dm.org/GKoil/frontend-project-lvl2?type=dev)
 [![time tracker](https://wakatime.com/badge/github/GKoil/frontend-project-lvl2.svg)](https://wakatime.com/badge/github/GKoil/frontend-project-lvl2)
 
+<br/>
+
+## During the creation of the project, I learned:
+---
+> * To write tests on Jest
+> * Read files on Node.js
+> * Parsing data from json, yml, ini
+> * Build AST and work with it
+> * Working with recursion
+> * Building an application interface based on the library [commander.js](https://github.com/tj/commander.js/)
+---
+
+<br/>
+
 * [About](#About)
 * [Installation](#Installation)
   * [npm package](#npm-package)
