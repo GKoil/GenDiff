@@ -8,9 +8,9 @@ import gendiff from '../src/index.js';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const getFixturePath = (file) => path.join(__dirname, '..', '__fixtures__', file);
+const getFixturePath = (filePath) => path.join(__dirname, '..', '__fixtures__', filePath);
 
-const readFile = (file) => fs.readFileSync(getFixturePath(file), 'utf8');
+const readFile = (filePath) => fs.readFileSync(getFixturePath(filePath), 'utf8');
 
 let resultStylish;
 let resultPlain;
