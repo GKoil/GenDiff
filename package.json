@@ -1,5 +1,5 @@
 {
-  "name": "gendiff-gkoil",
+  "name": "@gkoil/gendiff",
   "version": "1.0.0",
   "description": "gendiff will help you find the difference between two [json/yaml/ini] files",
   "type": "module",
@@ -14,7 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/GKoil/frontend-project-lvl2.git"
+    "url": "git+https://github.com/GKoil/GenDiff.git"
   },
   "publishConfig": { "registry": "https://npm.pkg.github.com/" },
   "keywords": [
@@ -27,9 +27,9 @@
   "author": "gkoil",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/GKoil/frontend-project-lvl2/issues"
+    "url": "https://github.com/GKoil/GenDiff/issues"
   },
-  "homepage": "https://github.com/GKoil/frontend-project-lvl2#readme",
+  "homepage": "https://github.com/GKoil/GenDiff#readme",
   "dependencies": {
     "@iarna/toml": "^2.2.5",
     "commander": "^6.1.0",
