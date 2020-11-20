@@ -6,17 +6,74 @@
 [![Dependency Status](https://david-dm.org/GKoil/frontend-project-lvl2.svg)](https://david-dm.org/GKoil/frontend-project-lvl2) [![devDependency Status](https://david-dm.org/GKoil/frontend-project-lvl2/dev-status.svg)](https://david-dm.org/GKoil/frontend-project-lvl2?type=dev)
 [![time tracker](https://wakatime.com/badge/github/GKoil/frontend-project-lvl2.svg)](https://wakatime.com/badge/github/GKoil/frontend-project-lvl2)
 
-## How it works?
-### `json`
-stylish format:
-[![asciicast](https://asciinema.org/a/ZqAakqhHUlrIiIniajbFpiA1G.svg)](https://asciinema.org/a/ZqAakqhHUlrIiIniajbFpiA1G)
-plain format:
-[![asciicast](https://asciinema.org/a/Jt2Rzp1r4pBBRoYCgv8RTksd5.svg)](https://asciinema.org/a/Jt2Rzp1r4pBBRoYCgv8RTksd5)
-json format:
-[![asciicast](https://asciinema.org/a/IEev17J6gbip0xCgIkEHXF4ox.svg)](https://asciinema.org/a/IEev17J6gbip0xCgIkEHXF4ox)
+* [About](#About)
+* [Installation](#Installation)
+  * [npm package](#npm-package)
+  * [build](#build)
+* [Usage](#Usage)
+* [Options](#Options)
+* [Examples formatters](#Examples)
+  * [Stylish](#Stylish)
+  * [Plain](#Plain)
+  * [JSON](#JSON)
 
-### `yaml | yml`
-[![asciicast](https://asciinema.org/a/JGwRLxGeJcIdBtwQPZIRjL1Ef.svg)](https://asciinema.org/a/JGwRLxGeJcIdBtwQPZIRjL1Ef)
+## About
+This program for working in the console, which allows to detect differences between three data formats (json, yml, ini) and output them in three different styles ('stylish', 'plain text' and 'json'). You can use different file formats for comparison (for example, json and ini).
+## Installation
+You can install gendiff with npm or build it from source.\
+**You must have [node.js](https://nodejs.org/en/) installed on your computer (version 14.0 or higher).**
+### npm package
+To install gendiff using `npm` run
+``` 
+npm i -g gendiff-gkoil
+```
+### build
+1. Clone the project on your computer
+    ```
+    git clone git@github.com:GKoil/GenDiff.git
+    ```
+2. Install dependencies
+    ```
+    npm i
+    ```
+3. Build this project
+    ```
+    make publish
+    ```
+4. Install it
+    ```
+    make link
+    ```
+## Usage
+Type `gendiff` in the console and pass the path parameters to the files
+```
+gendiff ~/project1/before.json ~/project2/after.json
+```
 
-### `ini`
-[![asciicast](https://asciinema.org/a/oACXkITWrQnMn4h6W09Flr206.svg)](https://asciinema.org/a/oACXkITWrQnMn4h6W09Flr206)
+Also you can youse difference output [formats](#Options)
+## Options
+`-V`\
+**Find out the version**\
+Example:
+```
+gendiff -V
+```
+`-h`\
+**Get help in console**\
+Example:
+```
+gendiff -h
+```
+`-f`\
+**Choose output stylish format.**\
+Example:
+```
+gendiff -f plain file1.json file2.json
+```
+## Examples
+### Stylish
+![Stylish formatter](https://raw.githubusercontent.com/gist/GKoil/7839f2e293ca04dcadf8c455b9c8211d/raw/f449afe388726080d227f419a7a340cf5f1d34a0/gendiff-stylish.svg)
+### Plain
+![Plain formatter](https://raw.githubusercontent.com/gist/GKoil/7839f2e293ca04dcadf8c455b9c8211d/raw/f449afe388726080d227f419a7a340cf5f1d34a0/gendiff-plain.svg)
+### JSON
+![JSON formatter](https://raw.githubusercontent.com/gist/GKoil/7839f2e293ca04dcadf8c455b9c8211d/raw/f449afe388726080d227f419a7a340cf5f1d34a0/gendiff-json.svg)
