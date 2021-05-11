@@ -34,7 +34,7 @@
     "@iarna/toml": "^2.2.5",
     "commander": "^6.1.0",
     "js-yaml": "^3.14.0",
-    "lodash": "^4.17.20"
+    "lodash": "^4.17.21"
   },
   "devDependencies": {
     "eslint": "^7.10.0",
