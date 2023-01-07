@@ -4,7 +4,7 @@ import ini from '@iarna/toml';
 export default (content, format) => {
   switch (format) {
     case 'yml' || 'yaml':
-      return yaml.safeLoad(content);
+      return yaml.load(content);
     case 'ini':
       return ini.parse(content);
     case 'json':
